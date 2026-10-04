@@ -3,9 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md Naimur Rahman | Full Stack Web Developer</title>
+    <meta name="description" content="Portfolio of Md Naimur Rahman, a developer creating thoughtful digital experiences.">
+    <title>Md Naimur Rahman | Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #17201d;
+            --muted: #64716b;
+            --paper: #f3f5ef;
+            --cream: #fffdf7;
+            --lime: #d8f26a;
+            --orange: #ff704a;
+            --line: #dce2d9;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+        }
+        a { color: inherit; text-decoration: none; }
+        .wrap { width: min(1120px, calc(100% - 48px)); margin: auto; }
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 28px 0;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -.03em;
+        }
+        .logo-mark { width: 12px; height: 12px; background: var(--orange); border-radius: 50%; }
+        nav { display: flex; gap: 28px; color: var(--muted); font-size: .9rem; }
+        nav a:hover { color: var(--ink); }
+        .hero {
+            min-height: 590px;
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
+            gap: 70px;
+            align-items: center;
+            padding: 72px 0 100px;
+        }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+        .eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--orange); }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; line-height: 1.05; margin: 0; letter-spacing: -.055em; }
+        h1 { max-width: 700px; margin-top: 22px; font-size: clamp(3.8rem, 8vw, 7.5rem); }
+        h1 span { color: var(--orange); }
+        .intro { max-width: 500px; margin: 28px 0 34px; color: var(--muted); font-size: 1.08rem; }
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border: 1px solid var(--ink);
+            border-radius: 2px;
+            background: var(--ink);
+            color: var(--cream);
+            font-weight: 700;
+            transition: transform .2s ease, background .2s ease;
+        }
+        .button:hover { transform: translateY(-3px); background: var(--orange); border-color: var(--orange); }
+        .button.light { background: transparent; color: var(--ink); }
+        .button.light:hover { background: var(--lime); border-color: var(--lime); }
+        .portrait {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-height: 360px;
+            background: var(--lime);
+            overflow: hidden;
+        }
+        .portrait::before, .portrait::after { content: ''; position: absolute; border: 1px solid rgba(23,32,29,.22); border-radius: 50%; }
+        .portrait::before { width: 350px; height: 350px; }
+        .portrait::after { width: 220px; height: 220px; }
+        .initials {
+            position: relative;
+            z-index: 1;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 8rem;
+            font-weight: 700;
+            letter-spacing: -.12em;
+        }
+        .portrait-label { position: absolute; right: 20px; bottom: 18px; font-size: .75rem; font-weight: 700; text-transform: uppercase; }
+        section { padding: 94px 0; border-top: 1px solid var(--line); }
+        .section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 42px; }
+        h2 { font-size: clamp(2.4rem, 5vw, 4.4rem); }
+        .section-note { max-width: 300px; color: var(--muted); font-size: .9rem; }
+        .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+        .project { padding: 28px; min-height: 270px; background: var(--cream); border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; transition: transform .25s ease; }
+        .project:hover { transform: translateY(-6px); }
+        .project:nth-child(2) { background: #dceae5; }
+        .project:nth-child(3) { background: #f9ddcb; }
+        .project:nth-child(4) { background: #e4e2f4; }
+        .project-top { display: flex; justify-content: space-between; color: var(--muted); font-size: .78rem; }
+        .project h3 { max-width: 360px; margin-top: 34px; font-size: 2rem; }
+        .arrow { font-size: 1.5rem; }
+        .skills { display: grid; grid-template-columns: 1fr 1fr; gap: 0 70px; }
+        .skill { display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--line); }
+        .skill small { color: var(--muted); }
+        .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: end; }
+        .contact h2 { max-width: 600px; }
+        .contact-copy { color: var(--muted); margin: 22px 0 0; }
+        .contact-links { display: grid; gap: 15px; justify-items: start; }
+        .contact-links a { border-bottom: 1px solid var(--ink); padding-bottom: 3px; font-weight: 700; }
+        footer { display: flex; justify-content: space-between; padding: 28px 0; color: var(--muted); font-size: .78rem; border-top: 1px solid var(--line); }
+        @media (max-width: 700px) {
+            .wrap { width: min(100% - 32px, 560px); }
+            nav { gap: 14px; font-size: .78rem; }
+            .hero, .contact { grid-template-columns: 1fr; gap: 42px; padding: 55px 0 75px; }
+            .hero { min-height: 0; }
+            h1 { font-size: clamp(3.6rem, 17vw, 6rem); }
+            .portrait { min-height: 290px; }
+            .initials { font-size: 6rem; }
+            .section-heading { display: block; }
+            .section-note { margin-top: 16px; }
+            .projects, .skills { grid-template-columns: 1fr; }
+            .project { min-height: 225px; }
+            section { padding: 70px 0; }
+            footer { display: block; }
+            footer span { display: block; margin-top: 6px; }
+        }
+    </style>
 </head>
 <body>
-    
+    <header class="wrap site-header">
+        <a class="logo" href="#top"><span class="logo-mark"></span> Naimur Rahman</a>
+        <nav aria-label="Main navigation">
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="wrap hero">
+            <div>
+                <div class="eyebrow">Developer · Designer · Builder</div>
+                <h1>Ideas into <span>useful</span> digital things.</h1>
+                <p class="intro">Hi, I’m Md Naimur Rahman. I build clear, fast, and human-friendly web experiences from Bangladesh.</p>
+                <a class="button" href="#work">See my work <span aria-hidden="true">↘</span></a>
+            </div>
+            <div class="portrait" aria-label="Md Naimur Rahman initials graphic">
+                <div class="initials">NR</div>
+                <div class="portrait-label">Available for select projects</div>
+            </div>
+        </section>
+
+        <section id="work">
+            <div class="wrap">
+                <div class="section-heading">
+                    <h2>Selected work</h2>
+                    <p class="section-note">A few things I’ve designed and developed with care, curiosity, and a lot of coffee.</p>
+                </div>
+                <div class="projects">
+                    <a class="project" href="#contact"><div class="project-top"><span>01 / Product design</span><span class="arrow">↗</span></div><h3>Making complex tools feel simple.</h3></a>
+                    <a class="project" href="#contact"><div class="project-top"><span>02 / Web development</span><span class="arrow">↗</span></div><h3>A faster home for growing teams.</h3></a>
+                    <a class="project" href="#contact"><div class="project-top"><span>03 / Brand & web</span><span class="arrow">↗</span></div><h3>Digital presence with a point of view.</h3></a>
+                    <a class="project" href="#contact"><div class="project-top"><span>04 / Experiments</span><span class="arrow">↗</span></div><h3>Small ideas, thoughtfully made.</h3></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="wrap">
+                <div class="section-heading"><h2>How I help</h2><p class="section-note">From the first sketch to the final line of code, I like making the whole thing feel intentional.</p></div>
+                <div class="skills">
+                    <div class="skill"><span>Frontend development</span><small>01</small></div>
+                    <div class="skill"><span>Responsive web design</span><small>02</small></div>
+                    <div class="skill"><span>JavaScript & React</span><small>03</small></div>
+                    <div class="skill"><span>Visual systems</span><small>04</small></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="wrap contact">
+                <div><div class="eyebrow">Have a project in mind?</div><h2>Let’s make something worth using.</h2><p class="contact-copy">I’m open to thoughtful freelance work, collaborations, and good conversations.</p></div>
+                <div class="contact-links"><a href="mailto:hello@naimur.dev">hello@naimur.dev ↗</a><a href="https://github.com" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="wrap"><span>© 2026 Md Naimur Rahman</span><span>Built with intention.</span></footer>
 </body>
 </html>
