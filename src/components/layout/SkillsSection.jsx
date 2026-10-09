@@ -152,32 +152,32 @@ export default function SkillsSection() {
       className="relative w-full bg-[#050b07] text-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* Background Ambient Glow Effects */}
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-green-500/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-green-500/10 rounded-none blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-emerald-500/10 rounded-none blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header & Subtitle */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white uppercase">
             Skills &amp; <span className="text-green-400">Expertise</span>
           </h2>
-          <p className="text-neutral-400 text-sm sm:text-base">
+          <p className="text-neutral-400 text-sm sm:text-base font-mono">
             A comprehensive breakdown of the technologies, tools, and
             methodologies I leverage to build scalable web applications.
           </p>
         </div>
 
-        {/* Skills Grid */}
+        {/* Skills Grid (Sharp Square Corners) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((category, index) => (
             <div
               key={index}
-              className={`group p-6 sm:p-8 rounded-[28px] bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-2xl shadow-xl hover:border-green-500/40 transition-all duration-300 hover:-translate-y-1 ${
+              className={`group p-6 sm:p-8 rounded-none bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-2xl shadow-xl hover:border-green-500/40 transition-all duration-300 hover:-translate-y-1 ${
                 index === 4 ? "lg:col-span-2" : ""
               }`}
             >
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-neutral-800/80">
-                <div className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-800 group-hover:border-green-500/50 transition-colors">
+                <div className="p-2.5 rounded-none bg-neutral-900 border border-neutral-800 group-hover:border-green-500/50 transition-colors">
                   {category.icon}
                 </div>
                 <h3 className="text-xl font-medium text-white tracking-wide">
@@ -190,9 +190,9 @@ export default function SkillsSection() {
                 {category.skills.map((skill, skillIndex) => (
                   <div
                     key={skillIndex}
-                    className="flex items-center gap-3 px-4 py-3 bg-[#141414] border border-neutral-800/80 rounded-xl text-xs sm:text-sm text-neutral-300 hover:text-white hover:border-green-500/40 hover:bg-neutral-900/80 transition-all duration-200 cursor-default"
+                    className="flex items-center gap-3 px-4 py-3 bg-[#141414] border border-neutral-800/80 rounded-none text-xs sm:text-sm text-neutral-300 hover:text-white hover:border-green-500/40 hover:bg-neutral-900/80 transition-all duration-200 cursor-default"
                   >
-                    <div className="p-2 rounded-lg bg-neutral-900 border border-neutral-800 shrink-0">
+                    <div className="p-2 rounded-none bg-neutral-900 border border-neutral-800 shrink-0">
                       {skill.icon}
                     </div>
                     <span className="font-medium tracking-tight truncate">

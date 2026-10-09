@@ -12,17 +12,20 @@ export default function HeroCanvas() {
     if (!ctx) return;
 
     let animationFrameId;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let width = 0;
+    let height = 0;
+    let devicePixelRatio = 1;
 
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+    const resizeCanvas = () => {
+      const bounds = canvas.getBoundingClientRect();
+      devicePixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      width = Math.max(1, bounds.width);
+      height = Math.max(1, bounds.height);
+      canvas.width = Math.floor(width * devicePixelRatio);
+      canvas.height = Math.floor(height * devicePixelRatio);
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
       initGrid();
     };
-
-    window.addEventListener("resize", handleResize);
 
     // Mouse coordinate tracking with smooth damping
     const mouse = { x: -1000, y: -1000, radius: 220 };
@@ -58,13 +61,15 @@ export default function HeroCanvas() {
       }
     };
 
-    initGrid();
+    const resizeObserver = new ResizeObserver(resizeCanvas);
+    resizeObserver.observe(canvas);
+    resizeCanvas();
 
     // Animation Loop
     let time = 0;
     const render = () => {
       // ডিপ ডার্ক গ্রিন ট্রেইল ইফেক্ট
-      ctx.fillStyle = "rgba(5, 15, 10, 0.2)";
+      ctx.fillStyle = "rgba(5, 15, 10, 0.24)";
       ctx.fillRect(0, 0, width, height);
 
       time += 0.025;
@@ -120,7 +125,7 @@ export default function HeroCanvas() {
     render();
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);

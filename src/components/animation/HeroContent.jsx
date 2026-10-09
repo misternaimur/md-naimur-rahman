@@ -1,12 +1,10 @@
 /** @format */
 "use client";
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { FaEnvelope, FaGithub } from "react-icons/fa";
 export default function HeroContent() {
   return (
-    <div className="max-w-5xl mx-auto text-center relative z-20 py-12">
+    <div className="relative z-20 mx-auto flex w-full max-w-5xl flex-col items-center py-12 text-center">
       {/* 1. Top Tagline Pill */}
       <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#141414] via-[#1c1c1c] to-[#141414] border border-green-500/30 px-5 py-2.5 rounded-full shadow-[0_0_25px_rgba(34,197,94,0.15)] backdrop-blur-xl mb-8 group hover:border-green-500/60 transition-all duration-300">
         {/* Glowing Status Dot */}
@@ -27,7 +25,7 @@ export default function HeroContent() {
         <span className="inline-flex items-center justify-center flex-wrap gap-x-3 gap-y-2">
           Hi. I&apos;m
           {/* Profile Wrapper with Hover Card Effect */}
-          <div className="relative inline-block group cursor-pointer transform -rotate-2 hover:rotate-0 transition-transform duration-300 mx-2">
+          <span className="relative mx-2 inline-block -rotate-2 transform cursor-pointer transition-transform duration-300 group hover:rotate-0">
             <span className="font-semibold text-green-400 inline-flex items-center gap-2.5 bg-[#161616] border border-neutral-800 px-5 py-2 rounded-full shadow-lg transition-all group-hover:border-green-400">
               <img
                 src="/asset/mister-naimur.jpg"
@@ -78,7 +76,7 @@ export default function HeroContent() {
                 </a>
               </div>
             </div>
-          </div>
+          </span>
         </span>
 
         <br />

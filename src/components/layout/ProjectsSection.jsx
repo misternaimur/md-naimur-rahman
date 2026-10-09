@@ -84,53 +84,8 @@ const projects = [
     github: "#",
     isComingSoon: false,
   },
-  {
-    title: "Project Three",
-    badge: "Full-Stack / SaaS",
-    description:
-      "Placeholder slot reserved for upcoming full-stack applications, architectures, or client tools currently in development.",
-    techStack: [
-      {
-        name: "Next.js",
-        icon: <SiNextdotjs className="w-3.5 h-3.5 text-white" />,
-      },
-      {
-        name: "TypeScript",
-        icon: <SiTypescript className="w-3.5 h-3.5 text-blue-400" />,
-      },
-      {
-        name: "Tailwind",
-        icon: <SiTailwindcss className="w-3.5 h-3.5 text-cyan-300" />,
-      },
-    ],
-    contribution:
-      "Designed for high scalability, optimized database indexing, and role-based access control workflows.",
-    liveDemo: "#",
-    github: "#",
-    isComingSoon: true,
-  },
-  {
-    title: "Project Four",
-    badge: "Microservices / API",
-    description:
-      "Reserved slot for advanced backend integrations, queue-based architecture, or modular component libraries.",
-    techStack: [
-      {
-        name: "Node.js",
-        icon: <FaNodeJs className="w-3.5 h-3.5 text-green-500" />,
-      },
-      { name: "Redis", icon: <SiRedis className="w-3.5 h-3.5 text-red-500" /> },
-      {
-        name: "Docker",
-        icon: <FaDocker className="w-3.5 h-3.5 text-blue-400" />,
-      },
-    ],
-    contribution:
-      "Focused on high-throughput server-side performance, data caching, and secure token management.",
-    liveDemo: "#",
-    github: "#",
-    isComingSoon: true,
-  },
+  
+  
 ];
 
 export default function ProjectsSection() {

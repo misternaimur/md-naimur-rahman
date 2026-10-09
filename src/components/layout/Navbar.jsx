@@ -14,14 +14,15 @@ import {
   RiMenu3Line,
   RiCloseLine,
 } from "react-icons/ri";
+import Logo from "./Logo";
 
 const navLinks = [
-  { name: "About Me", href: "#Skil", active: false },
-  { name: "Skills", href: "#pricing", active: false },
-  { name: "Projects", href: "#Edu", active: false },
-  { name: "Experience", href: "#about", active: false },
-  { name: "Education", href: "#about", active: false },
-  { name: "Contact Me", href: "#about", active: false },
+  { name: "About Me", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Experience", href: "#achievement-certification" },
+  { name: "Education", href: "#education" },
+  { name: "Contact Me", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -43,25 +44,23 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50  px-4 sm:px-6 lg:px-8 py-4 pointer-events-none">
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 py-4 pointer-events-none">
       <motion.div
         animate={{
-          maxWidth: isScrolled ? "900px" : "1000px", // max-w-7xl হলো 1280px
+          maxWidth: isScrolled ? "340px" : "1000px", // স্ক্রল করলে ন্যাভবারটি ছোট হয়ে শুধু লোগো ও হাইড মি রাখার মতো পারফেক্ট সাইজ হবে
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className="mx-auto border border-neutral-200/80 rounded-xl bg-white/90 backdrop-blur-md shadow-sm pointer-events-auto transition-all"
       >
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-2 sm:px-0">
           {/* Logo Section */}
-          <div className="flex items-center pl-6 pr-6 py-3 lg:border-r border-neutral-200 shrink-0">
+          <div className="flex items-center pl-4 sm:pl-6 pr-4 py-3 shrink-0">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white font-bold text-sm tracking-tighter">
-                M.
-              </div>
+              <Logo />
             </Link>
           </div>
 
-          {/* Desktop Navigation Links (স্ক্রল করলে হাইড বা মিনিমাইজ হয়ে যাবে) */}
+          {/* Desktop Navigation Links (স্ক্রল করলে সম্পূর্ণ হাইড হয়ে যাবে) */}
           <nav
             className={`hidden lg:flex items-center space-x-8 px-8 flex-1 transition-all duration-300 overflow-hidden ${
               isScrolled
@@ -73,27 +72,16 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative text-sm font-medium transition-colors py-2 whitespace-nowrap ${
-                  link.active
-                    ? "text-neutral-900 font-semibold"
-                    : "text-neutral-600 hover:text-neutral-900"
-                }`}
+                className="relative text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors py-2 whitespace-nowrap"
               >
                 {link.name}
-                {link.active && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-black"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
               </Link>
             ))}
           </nav>
 
           {/* Right Actions & Socials (Desktop) */}
           <div className="flex items-center shrink-0">
-            {/* Social Icons Group (স্ক্রল করলে এটিও হাইড হয়ে যাবে যাতে শুধু লোগো আর গেট এ ডেমো থাকে) */}
+            {/* Social Icons Group (স্ক্রল করলে হাইড হয়ে যাবে) */}
             <div
               className={`hidden lg:flex items-center space-x-4 px-6 border-r border-neutral-200 text-neutral-500 transition-all duration-300 overflow-hidden ${
                 isScrolled
@@ -127,19 +115,11 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Contact Sales & CTA */}
-            <div className="hidden lg:flex items-center space-x-6 pl-6 pr-4">
+            {/* Hire Me CTA (স্ক্রল করা অবস্থায় ডানপাশে পর্যাপ্ত প্যাডিং ও স্পেস নিশ্চিত করা হয়েছে) */}
+            <div className="flex items-center pr-4 sm:pr-6 pl-2 py-2">
               <Link
                 href="#contact"
-                className={`text-sm font-medium text-neutral-600 hover:text-neutral-950 transition-all duration-300 ${
-                  isScrolled ? "hidden xl:block" : "block"
-                }`}
-              >
-                |
-              </Link>
-              <Link
-                href="#demo"
-                className="inline-flex items-center justify-center rounded-b-sm bg-black px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-neutral-800 transition-all gap-1.5 group"
+                className="inline-flex items-center justify-center rounded-sm bg-black px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-neutral-800 transition-all gap-1.5 group whitespace-nowrap"
               >
                 Hire Me
                 <RiArrowRightUpLine
@@ -151,7 +131,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex lg:hidden pr-6">
+          <div className="flex lg:hidden pr-4">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-neutral-700 hover:text-black focus:outline-hidden"
@@ -174,7 +154,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="lg:hidden max-w-7xl mx-auto mt-3 bg-white/95 backdrop-blur-md border border-neutral-200 rounded-xl shadow-xl overflow-hidden"
+            className="lg:hidden max-w-7xl mx-auto mt-3 bg-white/95 backdrop-blur-md border border-neutral-200 rounded-xl shadow-xl overflow-hidden pointer-events-auto"
           >
             <div className="px-6 py-6 space-y-4">
               <div className="flex flex-col space-y-3">
@@ -183,11 +163,7 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`text-base font-medium py-1 ${
-                      link.active
-                        ? "text-black font-semibold"
-                        : "text-neutral-600"
-                    }`}
+                    className="text-base font-medium text-neutral-600 hover:text-black py-1"
                   >
                     {link.name}
                   </Link>
@@ -202,7 +178,10 @@ export default function Navbar() {
                   <Link href="https://twitter.com/" target="_blank">
                     <RiTwitterXFill size={18} />
                   </Link>
-                  <Link href="https://linkedin.com/in/misternaimur" target="_blank">
+                  <Link
+                    href="https://linkedin.com/in/misternaimur"
+                    target="_blank"
+                  >
                     <RiLinkedinFill size={20} />
                   </Link>
                   <Link href="https://youtube.com" target="_blank">
@@ -211,11 +190,11 @@ export default function Navbar() {
                 </div>
 
                 <Link
-                  href="#demo"
+                  href="#contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex items-center justify-center rounded-full bg-black px-5 py-3 text-sm font-medium text-white gap-2 w-full"
+                  className="inline-flex items-center justify-center rounded-md bg-black px-5 py-3 text-sm font-medium text-white gap-2 w-full"
                 >
-                  Get a Demo <RiArrowRightUpLine size={16} />
+                  Hire Me <RiArrowRightUpLine size={16} />
                 </Link>
               </div>
             </div>

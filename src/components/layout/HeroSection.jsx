@@ -1,14 +1,12 @@
 /** @format */
 "use client";
 import React from "react";
-import Link from "next/link";
-import { FaArrowRight, FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import HeroBackground from "../animation/HeroBackground"; // ব্যাকগ্রাউন্ড কম্পোনেন্ট
 import HeroCanvas from "../animation/HeroCanvas"; // অ্যানিমেশন কম্পোনেন্ট
 import HeroContent from "../animation/HeroContent";
 export default function HeroSection() {
   return (
-    <section className="font-bricolage-grotesque-font relative w-full min-h-screen flex items-center justify-center bg-black text-slate-100 overflow-hidden px-4 sm:px-6 lg:px-8 pt-36 pb-20">
+    <section className="font-bricolage-grotesque-font relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-[#050b07] px-4 pb-16 pt-32 text-slate-100 sm:px-6 sm:pb-20 lg:px-8">
       {/* 1. Background Layer */}
       <HeroBackground />
 
