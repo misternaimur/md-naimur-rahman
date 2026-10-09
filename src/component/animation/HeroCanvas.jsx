@@ -19,82 +19,100 @@ export default function HeroCanvas() {
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+      initGrid();
     };
 
     window.addEventListener("resize", handleResize);
 
-    // Mouse interactive radius
-    let mouse = { x: width / 2, y: height / 2, radius: 250 };
+    // Mouse coordinate tracking with smooth damping
+    const mouse = { x: -1000, y: -1000, radius: 220 };
     const handleMouseMove = (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     };
+    const handleMouseLeave = () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseleave", handleMouseLeave);
 
-    // Particle Configuration
-    const particleCount = Math.min(width < 768 ? 50 : 90, 110);
-    const particles = [];
+    // Grid Pixel Configuration
+    const spacing = 32;
+    let pixels = [];
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.9,
-        vy: (Math.random() - 0.5) * 0.9,
-        radius: Math.random() * 4 + 2.5,
-      });
-    }
+    const initGrid = () => {
+      pixels = [];
+      for (let x = spacing / 2; x < width + spacing; x += spacing) {
+        for (let y = spacing / 2; y < height + spacing; y += spacing) {
+          pixels.push({
+            x,
+            y,
+            baseSize: 2,
+            angle: Math.random() * Math.PI * 2, // প্রতিটা পিক্সেলের নিজস্ব ওয়েভ ফেজ
+            speed: 0.02 + Math.random() * 0.03, // একেকটা একেক গতিতে গ্রো করবে
+            isWhite: Math.random() > 0.82,
+          });
+        }
+      }
+    };
+
+    initGrid();
 
     // Animation Loop
+    let time = 0;
     const render = () => {
-      ctx.clearRect(0, 0, width, height);
+      // ডিপ ডার্ক গ্রিন ট্রেইল ইফেক্ট
+      ctx.fillStyle = "rgba(5, 15, 10, 0.2)";
+      ctx.fillRect(0, 0, width, height);
 
-      particles.forEach((p, index) => {
-        p.x += p.vx;
-        p.y += p.vy;
+      time += 0.025;
 
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
+      for (let i = 0; i < pixels.length; i++) {
+        const p = pixels[i];
+        p.angle += p.speed;
 
-        // Draw Nodes with Rich Black Style & Subtle Dark Glow
+        // Mouse distance check
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        let size = p.baseSize;
+        let alpha = 0.35;
+        let isHovered = false;
+
+        // মাউসের কাছে আসলে পিক্সেলগুলো বড় ও উজ্জ্বল হবে (Interactive Grow)
+        if (dist < mouse.radius) {
+          const factor = 1 - dist / mouse.radius;
+          size += factor * 5.5;
+          alpha += factor * 0.65;
+          isHovered = true;
+        }
+
+        // অর্গানিক এবং সুন্দর ওয়েভ সাইজ ক্যালকুলেশন (Smooth Wave & Grow)
+        const wave = Math.sin(time + p.x * 0.008 + p.y * 0.008 + p.angle) * 1.5;
+        const currentSize = Math.max(1, size + wave);
+
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(20, 20, 20, 0.95)"; // Deep Black/Dark Dot
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.9)";
-        ctx.fill();
-        ctx.shadowBlur = 0; // Reset shadow
 
-        // Connect particles with smooth dark/black lines
-        for (let j = index + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 170) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(40, 40, 40, ${0.35 * (1 - dist / 170)})`; // Dark connecting line
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-          }
+        // কালার টোন ও গ্লোয়িং ফিক্স
+        if (isHovered && p.isWhite) {
+          ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, alpha + 0.4)})`;
+        } else if (isHovered) {
+          ctx.fillStyle = `rgba(34, 197, 94, ${Math.min(1, alpha + 0.5)})`; // Vibrant Green
+        } else {
+          ctx.fillStyle = `rgba(22, 101, 52, ${alpha})`; // Deep Rich Forest Green
         }
 
-        // Mouse interaction connection (Dark/Black thematic line)
-        const mDist = Math.sqrt((p.x - mouse.x) ** 2 + (p.y - mouse.y) ** 2);
-        if (mDist < mouse.radius) {
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(60, 60, 60, ${
-            0.5 * (1 - mDist / mouse.radius)
-          })`;
-          ctx.lineWidth = 1.8;
-          ctx.stroke();
-        }
-      });
+        // স্কয়ার পিক্সেল ব্লক রেন্ডার
+        ctx.fillRect(
+          p.x - currentSize / 2,
+          p.y - currentSize / 2,
+          currentSize,
+          currentSize,
+        );
+      }
 
       animationFrameId = requestAnimationFrame(render);
     };
@@ -104,6 +122,7 @@ export default function HeroCanvas() {
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -111,7 +130,7 @@ export default function HeroCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-10"
+      className="absolute inset-0 pointer-events-none z-10 bg-[#050b07]"
     />
   );
 }

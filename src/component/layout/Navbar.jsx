@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -16,21 +16,44 @@ import {
 } from "react-icons/ri";
 
 const navLinks = [
-  { name: "Solutions", href: "#solutions", active: true },
-  { name: "Use cases", href: "#use-cases", active: false },
-  { name: "Pricing", href: "#pricing", active: false },
-  { name: "About", href: "#about", active: false },
+  { name: "About Me", href: "#Skil", active: false },
+  { name: "Skills", href: "#pricing", active: false },
+  { name: "Projects", href: "#Edu", active: false },
+  { name: "Experience", href: "#about", active: false },
+  { name: "Education", href: "#about", active: false },
+  { name: "Contact Me", href: "#about", active: false },
 ];
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // স্ক্রল হ্যান্ডলার ডিটেক্ট করার জন্য
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 lg:px-8 py-4 backdrop-blur-md transition-all">
-      <div className="max-w-7xl mx-auto border border-neutral-200/80 rounded-xl bg-white/90 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50  px-4 sm:px-6 lg:px-8 py-4 pointer-events-none">
+      <motion.div
+        animate={{
+          maxWidth: isScrolled ? "900px" : "1000px", // max-w-7xl হলো 1280px
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="mx-auto border border-neutral-200/80 rounded-xl bg-white/90 backdrop-blur-md shadow-sm pointer-events-auto transition-all"
+      >
         <div className="flex items-center justify-between">
           {/* Logo Section */}
-          <div className="flex items-center pl-6 pr-6 py-3 lg:border-r border-neutral-200">
+          <div className="flex items-center pl-6 pr-6 py-3 lg:border-r border-neutral-200 shrink-0">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white font-bold text-sm tracking-tighter">
                 M.
@@ -38,13 +61,19 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-8 px-8 flex-1">
+          {/* Desktop Navigation Links (স্ক্রল করলে হাইড বা মিনিমাইজ হয়ে যাবে) */}
+          <nav
+            className={`hidden lg:flex items-center space-x-8 px-8 flex-1 transition-all duration-300 overflow-hidden ${
+              isScrolled
+                ? "max-w-0 opacity-0 scale-95 pointer-events-none px-0"
+                : "max-w-xl opacity-100 scale-100"
+            }`}
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`relative text-sm font-medium transition-colors py-2 ${
+                className={`relative text-sm font-medium transition-colors py-2 whitespace-nowrap ${
                   link.active
                     ? "text-neutral-900 font-semibold"
                     : "text-neutral-600 hover:text-neutral-900"
@@ -63,19 +92,17 @@ export default function Navbar() {
           </nav>
 
           {/* Right Actions & Socials (Desktop) */}
-          <div className="hidden lg:flex items-center">
-            {/* Social Icons Group */}
-            <div className="flex items-center space-x-4 px-6 border-r border-neutral-200 text-neutral-500">
+          <div className="flex items-center shrink-0">
+            {/* Social Icons Group (স্ক্রল করলে এটিও হাইড হয়ে যাবে যাতে শুধু লোগো আর গেট এ ডেমো থাকে) */}
+            <div
+              className={`hidden lg:flex items-center space-x-4 px-6 border-r border-neutral-200 text-neutral-500 transition-all duration-300 overflow-hidden ${
+                isScrolled
+                  ? "max-w-0 opacity-0 px-0 border-r-0"
+                  : "max-w-xs opacity-100"
+              }`}
+            >
               <Link
-                href="https://discord.com"
-                target="_blank"
-                aria-label="Discord"
-                className="hover:text-neutral-900 transition-colors"
-              >
-                <RiDiscordFill size={18} />
-              </Link>
-              <Link
-                href="https://twitter.com"
+                href="https://twitter.com/misternaimur"
                 target="_blank"
                 aria-label="Twitter / X"
                 className="hover:text-neutral-900 transition-colors"
@@ -83,7 +110,7 @@ export default function Navbar() {
                 <RiTwitterXFill size={16} />
               </Link>
               <Link
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/misternaimur"
                 target="_blank"
                 aria-label="LinkedIn"
                 className="hover:text-neutral-900 transition-colors"
@@ -91,7 +118,7 @@ export default function Navbar() {
                 <RiLinkedinFill size={18} />
               </Link>
               <Link
-                href="https://youtube.com"
+                href="https://youtube.com/@misternaimur"
                 target="_blank"
                 aria-label="YouTube"
                 className="hover:text-neutral-900 transition-colors"
@@ -101,18 +128,20 @@ export default function Navbar() {
             </div>
 
             {/* Contact Sales & CTA */}
-            <div className="flex items-center space-x-6 pl-6 pr-4">
+            <div className="hidden lg:flex items-center space-x-6 pl-6 pr-4">
               <Link
                 href="#contact"
-                className="text-sm font-medium text-neutral-600 hover:text-neutral-950 transition-colors"
+                className={`text-sm font-medium text-neutral-600 hover:text-neutral-950 transition-all duration-300 ${
+                  isScrolled ? "hidden xl:block" : "block"
+                }`}
               >
-                Contact Sales
+                |
               </Link>
               <Link
                 href="#demo"
-                className="inline-flex items-center justify-center rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-neutral-800 transition-all gap-1.5 group"
+                className="inline-flex items-center justify-center rounded-b-sm bg-black px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-neutral-800 transition-all gap-1.5 group"
               >
-                Get a Demo
+                Hire Me
                 <RiArrowRightUpLine
                   size={16}
                   className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -136,7 +165,7 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Mobile Dropdown Menu */}
       <AnimatePresence>
@@ -166,22 +195,14 @@ export default function Navbar() {
               </div>
 
               <div className="pt-4 border-t border-neutral-200 flex flex-col space-y-4">
-                <Link
-                  href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium text-neutral-700"
-                >
-                  Contact Sales
-                </Link>
-
                 <div className="flex items-center space-x-5 text-neutral-600 pt-2">
                   <Link href="https://discord.com" target="_blank">
                     <RiDiscordFill size={20} />
                   </Link>
-                  <Link href="https://twitter.com" target="_blank">
+                  <Link href="https://twitter.com/" target="_blank">
                     <RiTwitterXFill size={18} />
                   </Link>
-                  <Link href="https://linkedin.com" target="_blank">
+                  <Link href="https://linkedin.com/in/misternaimur" target="_blank">
                     <RiLinkedinFill size={20} />
                   </Link>
                   <Link href="https://youtube.com" target="_blank">
