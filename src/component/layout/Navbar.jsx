@@ -26,12 +26,11 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="w-full top-0 z-50 px-4 sm:px-6 lg:px-8 py-4">
-      {/* max-w-7xler sathe mx-auto add kora holo jate eta screen-er upore center-e thake */}
-      <div className="max-w-7xl mx-auto border border-neutral-700 rounded-lg bg-white shadow-2xs">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 lg:px-8 py-4 backdrop-blur-md transition-all">
+      <div className="max-w-7xl mx-auto border border-neutral-200/80 rounded-xl bg-white/90 shadow-sm">
         <div className="flex items-center justify-between">
           {/* Logo Section */}
-          <div className="flex items-center pl-6 pr-6 py-4 lg:border-r border-neutral-200">
+          <div className="flex items-center pl-6 pr-6 py-3 lg:border-r border-neutral-200">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-white font-bold text-sm tracking-tighter">
                 M.
@@ -109,7 +108,6 @@ export default function Navbar() {
               >
                 Contact Sales
               </Link>
-
               <Link
                 href="#demo"
                 className="inline-flex items-center justify-center rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-neutral-800 transition-all gap-1.5 group"
@@ -147,7 +145,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="lg:hidden max-w-7xl mx-auto mt-2 bg-white border border-neutral-200 rounded-lg shadow-lg overflow-hidden"
+            className="lg:hidden max-w-7xl mx-auto mt-3 bg-white/95 backdrop-blur-md border border-neutral-200 rounded-xl shadow-xl overflow-hidden"
           >
             <div className="px-6 py-6 space-y-4">
               <div className="flex flex-col space-y-3">
