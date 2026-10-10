@@ -8,7 +8,10 @@ import Logo from "@/components/layout/Logo";
 
 export default function Loading() {
   return (
-    <main className="fixed inset-0 z-50 flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050b07] text-white">
+    <main
+      aria-live="polite"
+      className="fixed inset-0 z-50 flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050b07] px-4 text-white"
+    >
       {/* Background Ambient Glow Effects */}
       <div className="pointer-events-none absolute -left-24 top-1/4 h-[420px] w-[420px] rounded-full bg-green-500/10 blur-[140px]" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-[420px] w-[420px] rounded-full bg-emerald-500/10 blur-[140px]" />
@@ -38,7 +41,7 @@ export default function Loading() {
           </div>
 
           {/* Sharp Progress Bar Animation */}
-          <div className="h-1 w-56 overflow-hidden rounded-full bg-white/10">
+          <div className="h-1 w-full max-w-56 overflow-hidden rounded-full bg-white/10">
             <motion.div
               initial={{ x: "-100%" }}
               animate={{ x: "100%" }}

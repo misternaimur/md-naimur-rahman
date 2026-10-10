@@ -1,6 +1,7 @@
 /** @format */
 "use client";
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   SiFigma,
   SiNextdotjs,
@@ -122,11 +123,11 @@ export default function OrbitAnimation() {
   return (
     <div
       ref={stageRef}
-      className="orbit-stage relative w-[480px] h-[480px] md:w-[540px] md:h-[540px] flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
+      className="orbit-stage relative flex h-[min(480px,calc(100vw-2rem))] w-[min(480px,calc(100vw-2rem))] select-none items-center justify-center cursor-grab active:cursor-grabbing md:h-135 md:w-135"
     >
       {/* Growing & Glowing Orbit Rings */}
-      <div className="absolute w-[260px] h-[260px] border border-dashed border-green-500/30 rounded-full pointer-events-none animate-[spin_30s_linear_infinite] shadow-[0_0_15px_rgba(34,197,94,0.1)]"></div>
-      <div className="absolute w-[420px] h-[420px] border border-dashed border-green-500/20 rounded-full pointer-events-none animate-[spin_45s_linear_infinite_reverse] shadow-[0_0_20px_rgba(34,197,94,0.08)]"></div>
+      <div className="pointer-events-none absolute h-[54%] w-[54%] rounded-full border border-dashed border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.1)] animate-[spin_30s_linear_infinite]"></div>
+      <div className="pointer-events-none absolute h-[87%] w-[87%] rounded-full border border-dashed border-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.08)] animate-[spin_45s_linear_infinite_reverse]"></div>
 
       {/* Rotatable Container for Icons */}
       <div
@@ -143,7 +144,7 @@ export default function OrbitAnimation() {
               transform: `translate(-50%, -50%)`,
             }}
           >
-            <div className="w-13 h-13 w-14 h-14 bg-[#121212]/90 border border-green-500/30 hover:border-green-400 rounded-2xl flex items-center justify-center shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] relative group backdrop-blur-md transition-all">
+            <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-green-500/30 bg-[#121212]/90 shadow-[0_10px_25px_rgba(0,0,0,0.5)] backdrop-blur-md transition-all hover:border-green-400 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)]">
               {item.icon}
               {item.badge && (
                 <span
@@ -162,10 +163,12 @@ export default function OrbitAnimation() {
       </div>
 
       {/* Center Profile Image with Glowing Ring */}
-      <div className="absolute z-20 w-32 h-32 rounded-full p-1 bg-gradient-to-tr from-green-500 via-green-400 to-neutral-800 shadow-[0_0_30px_rgba(34,197,94,0.3)] overflow-hidden pointer-events-none flex items-center justify-center animate-pulse">
-        <img
-          src="asset/mister-naimur.jpg"
+      <div className="pointer-events-none absolute z-20 flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-linear-to-tr from-green-500 via-green-400 to-neutral-800 p-1 shadow-[0_0_30px_rgba(34,197,94,0.3)] animate-pulse sm:h-32 sm:w-32">
+        <Image
+          src="/asset/mister-naimur.jpg"
           alt="Profile"
+          fill
+          sizes="128px"
           className="w-full h-full object-cover rounded-full bg-neutral-900"
         />
       </div>

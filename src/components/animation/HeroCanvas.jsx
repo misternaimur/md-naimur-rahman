@@ -12,6 +12,10 @@ export default function HeroCanvas() {
     if (!ctx) return;
 
     let animationFrameId;
+    let isVisible = true;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     let width = 0;
     let height = 0;
     let devicePixelRatio = 1;
@@ -30,8 +34,9 @@ export default function HeroCanvas() {
     // Mouse coordinate tracking with smooth damping
     const mouse = { x: -1000, y: -1000, radius: 220 };
     const handleMouseMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      const bounds = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - bounds.left;
+      mouse.y = e.clientY - bounds.top;
     };
     const handleMouseLeave = () => {
       mouse.x = -1000;
@@ -42,7 +47,7 @@ export default function HeroCanvas() {
     window.addEventListener("mouseleave", handleMouseLeave);
 
     // Grid Pixel Configuration
-    const spacing = 32;
+    const spacing = window.innerWidth < 640 ? 24 : 32;
     let pixels = [];
 
     const initGrid = () => {
@@ -68,6 +73,8 @@ export default function HeroCanvas() {
     // Animation Loop
     let time = 0;
     const render = () => {
+      if (!isVisible) return;
+
       // ডিপ ডার্ক গ্রিন ট্রেইল ইফেক্ট
       ctx.fillStyle = "rgba(5, 15, 10, 0.24)";
       ctx.fillRect(0, 0, width, height);
@@ -119,13 +126,27 @@ export default function HeroCanvas() {
         );
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(render);
+      }
     };
 
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && !prefersReducedMotion) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = requestAnimationFrame(render);
+        }
+      },
+      { threshold: 0.01 },
+    );
+    intersectionObserver.observe(canvas);
     render();
 
     return () => {
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
@@ -135,7 +156,8 @@ export default function HeroCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-10 bg-[#050b07]"
+      aria-hidden="true"
+      className="absolute inset-0 z-10 h-full w-full pointer-events-none"
     />
   );
 }

@@ -6,7 +6,7 @@ import HeroCanvas from "../animation/HeroCanvas"; // অ্যানিমেশ
 import HeroContent from "../animation/HeroContent";
 export default function HeroSection() {
   return (
-    <section className="font-bricolage-grotesque-font relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden bg-[#050b07] px-4 pb-16 pt-32 text-slate-100 sm:px-6 sm:pb-20 lg:px-8">
+    <section className="font-bricolage-grotesque-font relative flex min-h-svh w-full items-center justify-center overflow-hidden bg-[#050b07] px-4 pb-12 pt-28 text-slate-100 sm:px-6 sm:pb-20 sm:pt-32 lg:px-8">
       {/* 1. Background Layer */}
       <HeroBackground />
 

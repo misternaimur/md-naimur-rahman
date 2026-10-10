@@ -1,6 +1,5 @@
 /** @format */
 
-import Image from "next/image";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/layout/HeroSection";
 import AboutSection from "@/components/layout/Aboutus";
