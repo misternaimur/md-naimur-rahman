@@ -47,8 +47,8 @@ const projects = [
     ],
     contribution:
       "Led a six-member team as Team Lead, managing Jira, running Scrum updates, handling Git/GitHub collaboration, and building full-stack workflows.",
-    liveDemo: "#",
-    github: "#",
+    liveDemo: "https://foodiego-mu.vercel.app/",
+    github: "https://github.com/misternaimur/foodiego",
     isComingSoon: false,
   },
   {
@@ -80,12 +80,10 @@ const projects = [
     ],
     contribution:
       "Developed complete appointment CRUD operations, implemented secure JWT authentication with protected routes, and designed a responsive interface.",
-    liveDemo: "#",
-    github: "#",
+    liveDemo: "https://doc-appoint-eight.vercel.app/",
+    github: "https://github.com/misternaimur/DocAppoint",
     isComingSoon: false,
   },
-  
-  
 ];
 
 export default function ProjectsSection() {
@@ -120,14 +118,21 @@ export default function ProjectsSection() {
               }`}
             >
               <div>
-                {/* Screenshot Preview Box */}
-                <div className="w-full h-52 bg-gradient-to-br from-neutral-900 to-[#0e1610] border border-neutral-800 flex items-center justify-center relative overflow-hidden mb-6 group-hover:border-green-500/40 transition-colors">
-                  <div className="absolute inset-0 bg-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <span className="text-neutral-500 font-mono text-sm tracking-wide">
-                    {project.isComingSoon
-                      ? `Coming Soon / Project 0${index + 1}`
-                      : `${project.title} Screenshot Preview`}
-                  </span>
+                {/* Project Image Preview */}
+                <div className="w-full h-52 bg-gradient-to-br from-neutral-900 to-[#0e1610] border border-neutral-800 relative overflow-hidden mb-6 group-hover:border-green-500/40 transition-colors">
+                  {project.isComingSoon ? (
+                    <div className="h-full flex items-center justify-center text-neutral-500 font-mono text-sm tracking-wide">
+                      Coming Soon / Project 0{index + 1}
+                    </div>
+                  ) : (
+                    <img
+                      src={`https://image.thum.io/get/width/1200/crop/700/${project.liveDemo}`}
+                      alt={`${project.title} website preview`}
+                      loading="lazy"
+                      className="h-full w-full object-cover object-top"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                 </div>
 
                 {/* Title & Badge */}

@@ -29,7 +29,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // স্ক্রল হ্যান্ডলার ডিটেক্ট করার জন্য
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 40) {
